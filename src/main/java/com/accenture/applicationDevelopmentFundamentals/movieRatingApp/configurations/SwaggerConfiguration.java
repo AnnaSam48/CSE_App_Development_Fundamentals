@@ -30,7 +30,7 @@ public class SwaggerConfiguration {
     /**Customized info about API in swagger file
      * (http..your-app-root/swagger-ui/index.html -example uri for documentation
      */
-    //TODO change sample uri to uri for this api documentation
+    //TODO change example uri to uri for this API's documentation
     private ApiInfo movieRatingAPIDetails(){
         return new ApiInfo("Movie Rating API",
                 "Simple movie rating application to rate movies",
