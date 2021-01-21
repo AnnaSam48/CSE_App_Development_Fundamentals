@@ -22,7 +22,7 @@ public class Movie implements Serializable {
     @ApiModelProperty(notes="Year")
     @Column
     private String Year;
-    @ApiModelProperty(notes="Movie Genre/-s")
+    @ApiModelProperty(notes="Movie genre/-s")
     @Column
     private String Genre;
     @ApiModelProperty(notes="Movie director")
