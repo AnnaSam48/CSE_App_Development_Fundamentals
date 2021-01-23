@@ -17,6 +17,10 @@ public class MovieAPIRequest {
 
     @Value("${openmoviedb.api.request}")
     private String requestURL;
+    @Value("${request.by.title.prefix}")
+    private String requestByTitlePrefix;
+    @Value("${request.by.id.prefix}")
+    private String requestByIdPrefix;
 
     private String getPreparedSearchKeyword(String keyword) {
         keyword = keyword.trim();
@@ -52,7 +56,7 @@ public class MovieAPIRequest {
         String jsonResponse;
 
         try {
-            URL url = new URL(requestURL + "s=" + requestedMovie);
+            URL url = new URL(requestURL + requestByTitlePrefix + requestedMovie);
             jsonResponse = getJsonResponse(url);
         } catch (Exception ex) {
             throw new RuntimeException();
@@ -71,7 +75,7 @@ public class MovieAPIRequest {
 
     public Movie getMovieByID(String movieId) {
         try {
-            URL url = new URL(requestURL + "i=" + movieId);
+            URL url = new URL(requestURL + requestByIdPrefix + movieId);
             String jsonResponse = getJsonResponse(url);
             Gson gson = new Gson();
             return gson.fromJson(jsonResponse, Movie.class);

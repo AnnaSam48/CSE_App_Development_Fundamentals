@@ -15,7 +15,7 @@ public class Movie implements Serializable {
     @ApiModelProperty(notes = "Internet Movie Database (IMDb) id")
     @Id
     @Column(length = 12)
-    private String imdbID;
+    private String imdbId;
     @ApiModelProperty(notes="Movie title")
     @Column
     private String Title;
@@ -35,8 +35,8 @@ public class Movie implements Serializable {
     public Movie() {
     }
 
-    public Movie(String imdbID, String title, String year, String genre, String director, String actors) {
-        this.imdbID = imdbID;
+    public Movie(String imdbId, String title, String year, String genre, String director, String actors) {
+        this.imdbId = imdbId;
         Title = title;
         Year = year;
         Genre = genre;
@@ -44,12 +44,12 @@ public class Movie implements Serializable {
         Actors = actors;
     }
 
-    public String getImdbID() {
-        return imdbID;
+    public String getImdbId() {
+        return imdbId;
     }
 
-    public void setImdbID(String imdbID) {
-        this.imdbID = imdbID;
+    public void setImdbId(String imdbId) {
+        this.imdbId = imdbId;
     }
 
     public String getTitle() {
