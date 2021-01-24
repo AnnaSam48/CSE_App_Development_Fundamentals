@@ -7,8 +7,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MovieRepository extends CrudRepository<Movie,String> {
+public interface MovieRepository extends CrudRepository<Movie, String> {
 
     List<Movie> findAll();
+
+    Movie findByTitle(String title);
+
     Movie findByImdbId(String id);
 }

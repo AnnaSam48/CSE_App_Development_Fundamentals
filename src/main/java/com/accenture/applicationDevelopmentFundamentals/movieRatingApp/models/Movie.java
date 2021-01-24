@@ -32,6 +32,7 @@ public class Movie implements Serializable {
     @Column
     private String Actors;
 
+
     public Movie() {
     }
 
@@ -91,4 +92,5 @@ public class Movie implements Serializable {
     public void setActors(String actors) {
         Actors = actors;
     }
+
 }
