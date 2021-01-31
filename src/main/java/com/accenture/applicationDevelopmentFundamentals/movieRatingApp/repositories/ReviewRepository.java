@@ -8,15 +8,16 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
 @Repository
 public interface ReviewRepository extends CrudRepository<Review, Long> {
 
-    String averageRatingValue = "SELECT AVG(r.userRatingForMovie) FROM Review r WHERE r.movieId = :movieId";
+    String SEARCHBYMOVIETITLE =
+            "SELECT r FROM Review r JOIN Movie m ON r.movieID = m.imdbID WHERE m.Title LIKE %:movieTitle%";
 
-    @Query(averageRatingValue)
-    Integer average(@Param(value = "movieId") String movieId);
-
+    List<Review> findAllByMovieId(String movieId);
     List<Review> findAll();
-    List<Review> findAllByMovieTitle(String movieTitle);
 
+    @Query(SEARCHBYMOVIETITLE)
+    List<Review> findByMovieTitle(@Param(value = "movieTitle") String movieTitle);
 }

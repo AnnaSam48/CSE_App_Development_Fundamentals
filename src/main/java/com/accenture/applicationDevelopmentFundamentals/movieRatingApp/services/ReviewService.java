@@ -1,66 +1,59 @@
 package com.accenture.applicationDevelopmentFundamentals.movieRatingApp.services;
 
+import com.accenture.applicationDevelopmentFundamentals.movieRatingApp.commands.CheckForExistingMovieCommand;
+import com.accenture.applicationDevelopmentFundamentals.movieRatingApp.commands.SaveCommand;
+import com.accenture.applicationDevelopmentFundamentals.movieRatingApp.exceptions.MovieIdError;
 import com.accenture.applicationDevelopmentFundamentals.movieRatingApp.models.Movie;
 import com.accenture.applicationDevelopmentFundamentals.movieRatingApp.models.Review;
-import com.accenture.applicationDevelopmentFundamentals.movieRatingApp.repositories.MovieRepository;
-import com.accenture.applicationDevelopmentFundamentals.movieRatingApp.repositories.ReviewRepository;
-import com.accenture.applicationDevelopmentFundamentals.movieRatingApp.services.externalAPIServices.MovieAPIRequest;
+import com.accenture.applicationDevelopmentFundamentals.movieRatingApp.services.ApiClient.MovieAPIRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.stereotype.Component;
 
-import javax.validation.Valid;
 
-@Service
+@Component
 public class ReviewService {
 
     @Autowired
-    Movie movie;
-    @Autowired
-    Review review;
-    @Autowired
-    ReviewRepository reviewRepository;
-    @Autowired
-    MovieRepository movieRepository;
-    @Autowired
     MovieAPIRequest movieAPIRequest;
     @Autowired
-    UsersInputService usersInputService;
+    Prompter userInput;
 
-    public Review newReviewToAdd(@PathVariable String movieId, @Valid Review reviewToBeAdded) {
+    @Autowired
+    CheckForExistingMovieCommand checkForExistingMovieCommand;
 
-        //Fetch movie via API call only, if it's data are not in database
-        //TODO exception handling
-        if (!movieRepository.existsById(movieId)) {
-            Movie newMovie = movieAPIRequest.getMovieById(movieId);
+    @Autowired
+    SaveCommand saveCommand;
 
-            if (newMovie == null) {
-                throw new RuntimeException();
-            }
 
-            reviewToBeAdded.setMovieId(movieId);
-            reviewToBeAdded.setMovieTitle(newMovie.getTitle());
-            movieRepository.save(newMovie);
-            reviewToBeAdded.setUserRatingForMovie(usersInputService.getUsersRatingForMovie());
-            reviewToBeAdded.setMovieAverage(usersInputService.getUsersRatingForMovie());
+    public Review writeReview(String movieId) {
+        Review review = new Review();
 
-            //if movie already has reviews
-        } else {
-
-            Movie movieWithNewReview = movieRepository.findByImdbId(movieId);
-            reviewToBeAdded.setMovieId(movieId);
-            reviewToBeAdded.setMovieTitle(movieWithNewReview.getTitle());
-            reviewToBeAdded.setUserRatingForMovie(usersInputService.getUsersRatingForMovie());
-            reviewToBeAdded.setMovieAverage(reviewRepository.average(movieId));
-        }
-
-            reviewToBeAdded.setReviewTitle(usersInputService.getReviewTitle());
-            reviewToBeAdded.setReviewText(usersInputService.getReviewText());
-            reviewToBeAdded.setAuthor(usersInputService.getAuthor());
-
-            reviewRepository.save(reviewToBeAdded);
-
-        return reviewToBeAdded;
+        setMovieInfoInReview(review, movieId);
+        String reviewTitle = userInput.getReviewTitle(review.getMovieTitle());
+        String reviewText = userInput.getReviewText();
+        String author = userInput.getAuthor();
+        int movieRating = userInput.getMovieRating();
+        review.setReviewText(reviewText);
+        review.setReviewTitle(reviewTitle);
+        review.setMovieId(movieId);
+        review.setMovieRating(movieRating);
+        review.setAuthor(author);
+        saveCommand.saveReview(review);
+        return review;
     }
 
+    private void setMovieInfoInReview(Review review, String movieId) {
+        if (!checkForExistingMovieCommand.movieInfoExistsInRepository(movieId)) {
+            Movie newMovie = movieAPIRequest.getMovieById(movieId);
+            if (newMovie.getImdbID() == null) {
+                throw new MovieIdError(movieId);
+            }
+            review.setMovieTitle(newMovie.getTitle());
+            saveCommand.saveMovie(newMovie);
+        } else {
+            Movie existingMovie = checkForExistingMovieCommand.findByImdbId(movieId);
+            review.setMovieTitle(existingMovie.getTitle());
+        }
+
+    }
 }

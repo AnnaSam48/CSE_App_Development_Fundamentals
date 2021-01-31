@@ -14,7 +14,6 @@ import java.util.Collections;
 
 
 @Configuration
-@EnableWebMvc
 public class SwaggerConfiguration {
 
     @Bean
@@ -23,14 +22,14 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.acenture.applicationDevelopmentFundamentals.movieRatingApp"))
-                .paths(PathSelectors.ant("*/movie/*"))
+                .paths(PathSelectors.ant("/movies/*"))
                 .build()
                 .apiInfo(movieRatingAPIDetails());
     }
 
 
     /**Customized info about API in swagger file
-     * (http..your-app-root/swagger-ui/index.html -example uri for documentation
+     * (localhost:8020/swagger-ui/index.html -example uri for documentation
      */
     //TODO change example uri to uri for this API's documentation
     private ApiInfo movieRatingAPIDetails(){

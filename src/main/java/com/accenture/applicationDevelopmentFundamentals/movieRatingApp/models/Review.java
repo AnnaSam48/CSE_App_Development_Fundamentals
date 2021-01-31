@@ -1,66 +1,66 @@
 package com.accenture.applicationDevelopmentFundamentals.movieRatingApp.models;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.Serializable;
 
+@ApiModel(description = "Review details")
 @Entity
 public class Review implements Serializable {
 
     @ApiModelProperty(notes="Review id")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long reviewId;
+    private Long reviewID;
+    @ApiModelProperty(notes="Review title")
+    private String reviewTitle;
     @ApiModelProperty(notes="Movie id")
     private String movieId;
     @ApiModelProperty(notes="Movie title")
     private String movieTitle;
-    @ApiModelProperty(notes="Review title")
-    @Column(columnDefinition = "text", nullable = false)
-    @Length(min = 3, max=160, message = "*Your review must have title at least 3 characters long, but no longer than 160 characters.")
-    @NotEmpty(message = "*Please type in your review title")
-    private String reviewTitle;
     @ApiModelProperty(notes="Review")
-    @Column(columnDefinition = "text", nullable=false)
-    @Length(min =2, max=65535, message = "*Your review should be at least two characters long, but no longer than 65 535 characters.")
-    @NotEmpty(message = "*Please type in your review")
     private String reviewText;
+    @ApiModelProperty(notes="User's rating for movie")
+    private int movieRating;
     @ApiModelProperty(notes="Author of the review")
     private String author;
-    @ApiModelProperty(notes="User's rating for movie")
-    private int userRatingForMovie;
     @ApiModelProperty(notes="Movie rating (average from all given ratings for this movie)")
     private Integer movieAverageRating;
-
 
     public Review() {
     }
 
-    public Review(Long reviewId, String movieId, String movieTitle,
-                  @Length(min = 3, max=160, message = "*Your review must have title at least 3 characters long, but no longer than 160 characters.")
-                  @NotEmpty(message = "*Please type in your review title") String reviewTitle,
-                  @Length(min = 2, max = 65535, message = "*Your review should be at least two characters long, but no longer than 65 535 characters.")
-                  @NotEmpty(message = "*Please type in your review") String reviewText,
-                  String author, int userRatingForMovie, Integer movieAverage) {
-        this.reviewId = reviewId;
+    public Review(Long reviewID, String reviewTitle, String movieId, String movieTitle, String reviewText,
+                  int movieRating, String author, Integer movieAverageRating) {
+        this.reviewID = reviewID;
+        this.reviewTitle = reviewTitle;
         this.movieId = movieId;
         this.movieTitle = movieTitle;
-        this.reviewTitle = reviewTitle;
         this.reviewText = reviewText;
+        this.movieRating = movieRating;
         this.author = author;
-        this.userRatingForMovie = userRatingForMovie;
-        this.movieAverageRating = movieAverage;
+        this.movieAverageRating = movieAverageRating;
     }
 
-    public Long getReviewId() {
-        return reviewId;
+    public Long getReviewID() {
+        return reviewID;
     }
 
-    public void setReviewId(Long reviewId) {
-        this.reviewId = reviewId;
+    public void setReviewID(Long reviewID) {
+        this.reviewID = reviewID;
+    }
+
+    public String getReviewTitle() {
+        return reviewTitle;
+    }
+
+    public void setReviewTitle(String reviewTitle) {
+        this.reviewTitle = reviewTitle;
     }
 
     public String getMovieId() {
@@ -79,20 +79,20 @@ public class Review implements Serializable {
         this.movieTitle = movieTitle;
     }
 
-    public String getReviewTitle() {
-        return reviewTitle;
-    }
-
-    public void setReviewTitle(String reviewTitle) {
-        this.reviewTitle = reviewTitle;
-    }
-
     public String getReviewText() {
         return reviewText;
     }
 
     public void setReviewText(String reviewText) {
         this.reviewText = reviewText;
+    }
+
+    public int getMovieRating() {
+        return movieRating;
+    }
+
+    public void setMovieRating(int movieRating) {
+        this.movieRating = movieRating;
     }
 
     public String getAuthor() {
@@ -103,19 +103,11 @@ public class Review implements Serializable {
         this.author = author;
     }
 
-    public int getUserRatingForMovie() {
-        return userRatingForMovie;
-    }
-
-    public void setUserRatingForMovie(int userRatingForMovie) {
-        this.userRatingForMovie = userRatingForMovie;
-    }
-
-    public Integer getMovieAverage() {
+    public Integer getMovieAverageRating() {
         return movieAverageRating;
     }
 
-    public void setMovieAverage(Integer movieAverage) {
-        this.movieAverageRating = movieAverage;
+    public void setMovieAverageRating(Integer movieAverageRating) {
+        this.movieAverageRating = movieAverageRating;
     }
 }
