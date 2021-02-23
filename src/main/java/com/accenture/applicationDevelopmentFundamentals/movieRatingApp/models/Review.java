@@ -16,7 +16,7 @@ public class Review implements Serializable {
     @ApiModelProperty(notes="Review id")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long reviewID;
+    private Long reviewId;
     @ApiModelProperty(notes="Review title")
     private String reviewTitle;
     @ApiModelProperty(notes="Movie id")
@@ -35,9 +35,9 @@ public class Review implements Serializable {
     public Review() {
     }
 
-    public Review(Long reviewID, String reviewTitle, String movieId, String movieTitle, String reviewText,
+    public Review(Long reviewId, String reviewTitle, String movieId, String movieTitle, String reviewText,
                   int movieRating, String author, Integer movieAverageRating) {
-        this.reviewID = reviewID;
+        this.reviewId = reviewId;
         this.reviewTitle = reviewTitle;
         this.movieId = movieId;
         this.movieTitle = movieTitle;
@@ -47,12 +47,12 @@ public class Review implements Serializable {
         this.movieAverageRating = movieAverageRating;
     }
 
-    public Long getReviewID() {
-        return reviewID;
+    public Long getReviewId() {
+        return reviewId;
     }
 
-    public void setReviewID(Long reviewID) {
-        this.reviewID = reviewID;
+    public void setReviewId(Long reviewId) {
+        this.reviewId = reviewId;
     }
 
     public String getReviewTitle() {

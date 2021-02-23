@@ -13,7 +13,7 @@ import java.util.List;
 public interface ReviewRepository extends CrudRepository<Review, Long> {
 
     String SEARCHBYMOVIETITLE =
-            "SELECT r FROM Review r JOIN Movie m ON r.movieID = m.imdbID WHERE m.Title LIKE %:movieTitle%";
+            "SELECT r FROM Review r JOIN Movie m ON r.movieId = m.imdbID WHERE m.Title LIKE %:movieTitle%";
 
     List<Review> findAllByMovieId(String movieId);
     List<Review> findAll();

@@ -1,4 +1,4 @@
-package com.accenture.applicationDevelopmentFundamentals.movieRatingApp.commands;
+package com.accenture.applicationDevelopmentFundamentals.movieRatingApp.action;
 
 import com.accenture.applicationDevelopmentFundamentals.movieRatingApp.exceptions.ReviewError;
 import com.accenture.applicationDevelopmentFundamentals.movieRatingApp.models.Review;
@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Component
-public class GetReviewsCommand {
+public class GetReviewsAction {
 
     @Autowired
     ReviewRepository reviewRepository;
 
-    public List<Review> getMovieReviews(@RequestParam String movieTitle) {
+    public List<Review> getMovieReviewsByMovieTitle(@RequestParam String movieTitle) {
         List<Review> reviewsFound = reviewRepository.findByMovieTitle(movieTitle);
         if (reviewsFound.isEmpty()) {
             throw new ReviewError(movieTitle);

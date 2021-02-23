@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.util.Scanner;
 
 @Component
-class Prompter {
+class Converter {
 
     Scanner scanner = new Scanner(System.in);
 
