@@ -29,14 +29,12 @@ public class Review implements Serializable {
     private int movieRating;
     @ApiModelProperty(notes="Author of the review")
     private String author;
-    @ApiModelProperty(notes="Movie rating (average from all given ratings for this movie)")
-    private Integer movieAverageRating;
 
     public Review() {
     }
 
     public Review(Long reviewId, String reviewTitle, String movieId, String movieTitle, String reviewText,
-                  int movieRating, String author, Integer movieAverageRating) {
+                  int movieRating, String author) {
         this.reviewId = reviewId;
         this.reviewTitle = reviewTitle;
         this.movieId = movieId;
@@ -44,7 +42,6 @@ public class Review implements Serializable {
         this.reviewText = reviewText;
         this.movieRating = movieRating;
         this.author = author;
-        this.movieAverageRating = movieAverageRating;
     }
 
     public Long getReviewId() {
@@ -103,11 +100,4 @@ public class Review implements Serializable {
         this.author = author;
     }
 
-    public Integer getMovieAverageRating() {
-        return movieAverageRating;
-    }
-
-    public void setMovieAverageRating(Integer movieAverageRating) {
-        this.movieAverageRating = movieAverageRating;
-    }
 }

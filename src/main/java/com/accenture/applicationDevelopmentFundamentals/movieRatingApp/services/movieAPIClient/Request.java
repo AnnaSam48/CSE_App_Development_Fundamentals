@@ -1,4 +1,4 @@
-package com.accenture.applicationDevelopmentFundamentals.movieRatingApp.services.ApiClient;
+package com.accenture.applicationDevelopmentFundamentals.movieRatingApp.services.movieAPIClient;
 
 import com.accenture.applicationDevelopmentFundamentals.movieRatingApp.exceptions.MovieTitleError;
 import com.accenture.applicationDevelopmentFundamentals.movieRatingApp.exceptions.TechnicalError;
@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.List;
 
 @Component
-public class MovieAPIRequest {
+public class Request {
 
     @Value("${openmoviedb.api.request}")
     private String requestURL;
@@ -25,7 +25,7 @@ public class MovieAPIRequest {
     private String requestByIdPrefix;
 
     private String getPreparedSearchKeyword(String keyword) {
-        return keyword.trim().replaceAll(" ", "%20");
+        return keyword.trim().replace(" ", "%20");
     }
 
     public List<Movie> getMoviesByTitle(String movieTitle) {
@@ -41,8 +41,8 @@ public class MovieAPIRequest {
         }
 
         Gson gson = new Gson();
-        ClientResponse clientResponse = gson.fromJson(jsonResponse, ClientResponse.class);
-        List<Movie> moviesFound = clientResponse.getSearch();
+        Response response = gson.fromJson(jsonResponse, Response.class);
+        List<Movie> moviesFound = response.getSearch();
 
         if (moviesFound == null) {
             throw new MovieTitleError(requestedMovie);

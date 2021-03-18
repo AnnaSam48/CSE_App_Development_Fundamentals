@@ -1,4 +1,4 @@
-package com.accenture.applicationDevelopmentFundamentals.movieRatingApp.services.ApiClient;
+package com.accenture.applicationDevelopmentFundamentals.movieRatingApp.services.movieAPIClient;
 
 import com.accenture.applicationDevelopmentFundamentals.movieRatingApp.models.Movie;
 import org.springframework.stereotype.Component;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class ClientResponse {
+public class Response {
 
 
     List<Movie> Search;
