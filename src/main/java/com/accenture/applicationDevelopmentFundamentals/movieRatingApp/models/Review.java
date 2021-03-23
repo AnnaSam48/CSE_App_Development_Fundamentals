@@ -23,6 +23,8 @@ public class Review implements Serializable {
     private String movieId;
     @ApiModelProperty(notes="Movie title")
     private String movieTitle;
+    @ApiModelProperty(notes = "Movie year")
+    private String movieYear;
     @ApiModelProperty(notes="Review")
     private String reviewText;
     @ApiModelProperty(notes="User's rating for movie")
@@ -33,12 +35,13 @@ public class Review implements Serializable {
     public Review() {
     }
 
-    public Review(Long reviewId, String reviewTitle, String movieId, String movieTitle, String reviewText,
-                  int movieRating, String author) {
+    public Review(Long reviewId, String reviewTitle, String movieId, String movieTitle, String movieYear,
+                  String reviewText, int movieRating, String author) {
         this.reviewId = reviewId;
         this.reviewTitle = reviewTitle;
         this.movieId = movieId;
         this.movieTitle = movieTitle;
+        this.movieYear = movieYear;
         this.reviewText = reviewText;
         this.movieRating = movieRating;
         this.author = author;
@@ -75,6 +78,10 @@ public class Review implements Serializable {
     public void setMovieTitle(String movieTitle) {
         this.movieTitle = movieTitle;
     }
+
+    public String getMovieYear() { return movieYear; }
+
+    public void setMovieYear(String movieYear) { this.movieYear = movieYear; }
 
     public String getReviewText() {
         return reviewText;
