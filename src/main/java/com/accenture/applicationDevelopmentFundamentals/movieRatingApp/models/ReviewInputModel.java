@@ -3,7 +3,6 @@ package com.accenture.applicationDevelopmentFundamentals.movieRatingApp.models;
 public class ReviewInputModel {
 
     private String movieId;
-    //TODO is there a way to set limits?
     private int movieRating;
     private String titleForReview;
     private String reviewText;

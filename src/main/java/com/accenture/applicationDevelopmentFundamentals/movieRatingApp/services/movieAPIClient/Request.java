@@ -24,17 +24,19 @@ public class Request {
     @Value("${request.by.id.prefix}")
     private String requestByIdPrefix;
 
-    private String getPreparedSearchKeyword(String keyword) {
-        return keyword.trim().replace(" ", "%20");
+    protected String getPreparedSearchKeyword(String keyword) {
+         return keyword.trim().replace(" ", "%20");
     }
 
     public List<Movie> getMoviesByTitle(String movieTitle) {
 
         String requestedMovie = getPreparedSearchKeyword(movieTitle);
         String jsonResponse;
+        String urlString = requestURL + requestByTitlePrefix + requestedMovie;
 
         try {
-          URL url = new URL(requestURL + requestByTitlePrefix + requestedMovie);
+
+          URL url = new URL(urlString);
           jsonResponse = getJsonResponse(url);
         } catch (Exception e) {
             throw new TechnicalError(e.toString());
@@ -51,8 +53,9 @@ public class Request {
     }
 
     public Movie getMovieById(String movieId) {
+        String urlString = requestURL + requestByIdPrefix + movieId;
         try {
-            URL url = new URL(requestURL + requestByIdPrefix + movieId);
+            URL url = new URL(urlString);
             String jsonResponse = getJsonResponse(url);
             Gson gson = new Gson();
             return gson.fromJson(jsonResponse, Movie.class);
